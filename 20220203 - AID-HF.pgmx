@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProbModelXML formatVersion="0.2.0">
+  <ProbNet type="InfluenceDiagram">
+    <Comment showWhenOpeningNetwork="false"><![CDATA[<<Double click to add/modify comment>>]]></Comment>
+    <DecisionCriteria>
+      <Criterion name="---" unit="---" />
+    </DecisionCriteria>
+    <Properties />
+    <Variables>
+      <Variable name="Orthopnea" type="finiteStates" role="chance">
+        <Coordinates x="413" y="396" />
+        <States>
+          <State name="0" />
+          <State name="1" />
+          <State name="2" />
+          <State name="3" />
+        </States>
+      </Variable>
+      <Variable name="Edema" type="finiteStates" role="chance">
+        <Coordinates x="595" y="493" />
+        <States>
+          <State name="0" />
+          <State name="1" />
+          <State name="2" />
+          <State name="3" />
+        </States>
+      </Variable>
+      <Variable name="Dizziness" type="finiteStates" role="chance">
+        <Coordinates x="775" y="435" />
+        <States>
+          <State name="0" />
+          <State name="1" />
+          <State name="2" />
+          <State name="3" />
+        </States>
+      </Variable>
+      <Variable name="Syncope" type="finiteStates" role="chance">
+        <Coordinates x="716" y="475" />
+        <States>
+          <State name="no" />
+          <State name="yes" />
+        </States>
+      </Variable>
+      <Variable name="Fluid level" type="finiteStates" role="chance">
+        <Coordinates x="623" y="282" />
+        <States>
+          <State name="too low" />
+          <State name="low" />
+          <State name="average" />
+          <State name="high" />
+          <State name="too high" />
+        </States>
+      </Variable>
+      <Variable name="Cost" type="numeric" role="utility">
+        <Coordinates x="1097" y="355" />
+        <Unit />
+        <Precision>0.01</Precision>
+        <Criterion name="---" />
+      </Variable>
+      <Variable name="Advice" type="finiteStates" role="decision">
+        <Coordinates x="993" y="288" />
+        <States>
+          <State name="Seek medical help" />
+          <State name="Do nothing" />
+          <State name="Decrease dose" />
+          <State name="Increase dose" />
+        </States>
+      </Variable>
+      <Variable name="Hospitalisation or death" type="finiteStates" role="chance">
+        <Coordinates x="864" y="337" />
+        <States>
+          <State name="no" />
+          <State name="yes" />
+        </States>
+      </Variable>
+      <Variable name="Cough" type="finiteStates" role="chance">
+        <Coordinates x="471" y="464" />
+        <States>
+          <State name="0" />
+          <State name="1" />
+          <State name="2" />
+          <State name="3" />
+        </States>
+      </Variable>
+      <Variable name="Health" type="numeric" role="utility">
+        <Coordinates x="963" y="414" />
+        <Unit />
+        <Precision>0.01</Precision>
+        <Criterion name="---" />
+      </Variable>
+    </Variables>
+    <Links>
+      <Link directed="true">
+        <Variable name="Fluid level" />
+        <Variable name="Orthopnea" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Fluid level" />
+        <Variable name="Dizziness" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Fluid level" />
+        <Variable name="Syncope" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Fluid level" />
+        <Variable name="Edema" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Fluid level" />
+        <Variable name="Hospitalisation or death" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Fluid level" />
+        <Variable name="Cough" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Advice" />
+        <Variable name="Cost" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Advice" />
+        <Variable name="Hospitalisation or death" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Hospitalisation or death" />
+        <Variable name="Health" />
+      </Link>
+    </Links>
+    <Potentials>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Orthopnea" />
+          <Variable name="Fluid level" />
+        </Variables>
+        <Values>0.5 0.25 0.15 0.1 0.7 0.2 0.07 0.03 0.7 0.2 0.07 0.03 0.2 0.3 0.3 0.2 0.2 0.2 0.25 0.35</Values>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Edema" />
+          <Variable name="Fluid level" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Dizziness" />
+          <Variable name="Fluid level" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Syncope" />
+          <Variable name="Fluid level" />
+        </Variables>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Fluid level" />
+        </Variables>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <UtilityVariable name="Cost" />
+        <Variables>
+          <Variable name="Advice" />
+        </Variables>
+        <Values>-2.0 0.0 -0.5 0.0</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Hospitalisation or death" />
+          <Variable name="Fluid level" />
+          <Variable name="Advice" />
+        </Variables>
+        <Values>0.95 0.05 0.97 0.03 0.99 0.01 0.93 0.07 0.85 0.15 0.85 0.15 0.9 0.1 0.97 0.03 0.8 0.2 0.7 0.3 0.9 0.1 0.95 0.05 0.95 0.05 0.75 0.25 0.65 0.35 0.8 0.2 0.9 0.1 0.98 0.02 0.9 0.1 0.8 0.2</Values>
+      </Potential>
+      <Potential type="Uniform" role="conditionalProbability">
+        <Variables>
+          <Variable name="Cough" />
+          <Variable name="Fluid level" />
+        </Variables>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <UtilityVariable name="Health" />
+        <Variables>
+          <Variable name="Hospitalisation or death" />
+        </Variables>
+        <Values>0.0 -10.0</Values>
+      </Potential>
+    </Potentials>
+  </ProbNet>
+  <InferenceOptions>
+    <MulticriteriaOptions>
+      <SelectedAnalysisType>UNICRITERION</SelectedAnalysisType>
+      <Unicriterion>
+        <Scales>
+          <Scale Criterion="---" Value="1.0" />
+        </Scales>
+      </Unicriterion>
+      <CostEffectiveness>
+        <Scales>
+          <Scale Criterion="---" Value="1.0" />
+        </Scales>
+        <CE_Criteria>
+          <CE_Criterion Criterion="---" Value="Cost" />
+        </CE_Criteria>
+      </CostEffectiveness>
+    </MulticriteriaOptions>
+  </InferenceOptions>
+</ProbModelXML>

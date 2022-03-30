@@ -1,0 +1,27 @@
+@import '~normalize.css';
+@import 'src/variables.scss';
+
+html {
+  font-family: $defaultFontFamily;
+  font-size: $defaultFontSize; // This will adapt layout because of rem unit
+  color: $defaultFontColor;
+}
+
+// Lower font size on smaller displays
+@media only screen and (max-width: 786px) {
+  html {
+    font-size: $defaultFontSize - 2px;
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 2rem 0;
+}
+p {
+  margin: 0;
+}
+

@@ -1,0 +1,31 @@
+@import "src/variables.scss";
+
+.toolbar {
+  height: 4rem;
+  align-items: center;
+  background-color: $primary;
+  color: white;
+  padding: 0 3rem;
+}
+.toolbar img {
+  padding: 0.3rem;
+}
+.content {
+  margin: 4rem;
+}
+.title {
+  font-weight: 100;
+}
+button {
+  background-color: $secondary;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.3rem;
+  transition: border-radius 500ms;
+}
+button:hover {
+  text-decoration-line: underline;
+  border-radius: 0.6rem;
+  cursor: pointer;
+}

@@ -1,0 +1,48 @@
+@import "src/variables.scss";
+
+h1, h2{
+    text-align: center;
+}
+.result {
+    border-radius: 4px;
+    max-width: max-content;
+    padding: 0rem 2rem;
+}
+
+@if $verticalResult {
+  .result-item {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@if not $verticalResult {
+  .result-item {
+    display: flex;
+    flex-direction: row;
+  }
+  .result-item h2 {
+    margin: auto;
+  }
+}
+
+button[type="button"] {
+    background-color: $secondary;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.3rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 500ms;
+  }
+  button[type="button"]:hover {
+    background-color: $secondary;
+    color: white;
+    border: none;
+    border-radius: 0.8rem;
+    text-decoration-line: underline;
+  }
+  .result-img{
+    margin: auto;
+    width: 50%;
+  }

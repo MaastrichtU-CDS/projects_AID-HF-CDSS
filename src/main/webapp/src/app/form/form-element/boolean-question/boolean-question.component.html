@@ -1,0 +1,12 @@
+<div fxLayout="column" fxLayoutGap="2rem">
+    <app-information-section [questionName]="name">
+        <p>{{ 'question.' + name | translate }}</p>
+    </app-information-section>
+    <div class="radio-toolbar" fxLayout="row" fxLayoutGap="1rem">
+        <input type="radio" id="radioYes" name="radioBoolean" value="YES"  [formControl]="control">
+        <label for="radioYes">{{ 'answer.yes' | translate }}</label>
+
+        <input type="radio" id="radioNo" name="radioBoolean" value="NO"  [formControl]="control">
+        <label for="radioNo">{{ 'answer.no' | translate }}</label>
+    </div>
+</div>

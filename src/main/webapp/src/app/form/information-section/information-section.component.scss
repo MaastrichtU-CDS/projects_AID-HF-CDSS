@@ -1,0 +1,30 @@
+@import "src/variables.scss";
+
+.in-circle {
+    display: block;
+    background: $primary;
+    color: #fff;
+    border-radius: 50%;
+    flex: 0 0 1.5em;
+    line-height: 1.5rem;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.in-box {
+    padding: 2rem;
+    margin-top: 1rem;
+    background-color: aliceblue;
+    font-size: $defaultFontSize + 2;
+    opacity: 1;
+    height: auto;
+    transition: height 0ms 0ms, opacity 600ms 0ms;
+}
+.hide {
+    padding: 0rem;
+    margin: 0rem;
+    overflow: hidden;  /* Hide the element content, while height = 0 */
+    height: 0;
+    opacity: 0;
+    transition: height 0ms 400ms, opacity 400ms 0ms;
+}
