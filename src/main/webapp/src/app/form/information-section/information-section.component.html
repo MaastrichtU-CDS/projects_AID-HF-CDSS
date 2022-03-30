@@ -1,0 +1,5 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+<ng-content></ng-content>
+<div class="in-circle" [title]="'information.helper' | translate" (click)="toggle()">?</div>
+</div>
+<p [ngClass]="show ? 'in-box' : 'in-box hide' ">{{'information.' + questionName + '.description' | translate}}</p>

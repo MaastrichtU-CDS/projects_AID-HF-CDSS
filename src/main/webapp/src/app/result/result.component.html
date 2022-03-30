@@ -1,0 +1,22 @@
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3rem">
+    <h1>{{'result.title' | translate}}:</h1>
+<div [ngSwitch]="result" class="result">
+    <div *ngSwitchCase="'Increase dose'" class="result-item">
+        <img class="result-img" src="/assets/images/medication_increase_icon.svg">
+        <h2>{{'result.increaseDose' | translate}}</h2>
+    </div>
+    <div *ngSwitchCase="'Decrease dose'">
+        <img class="result-img" src="/assets/images/medication_decrease_icon.svg">
+        <h2>{{'result.decreaseDose' | translate}}</h2>
+    </div>
+    <div *ngSwitchCase="'Nothing'">
+        <img class="result-img" src="/assets/images/medication_ok_icon.svg">
+        <h2>{{'result.doNothing' | translate}}</h2>
+    </div>
+    <div *ngSwitchCase="'Go to hospital'">
+        <img class="result-img" src="/assets/images/medication_hospital_icon.svg">
+        <h2>{{'result.goToHospital' | translate}}</h2>
+    </div>
+</div>
+    <button type="button" (click)="restartEvent.emit()">{{'result.restart' | translate}}</button>
+</div>

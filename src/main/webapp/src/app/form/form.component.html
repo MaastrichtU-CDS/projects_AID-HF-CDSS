@@ -1,0 +1,16 @@
+<form [formGroup]="symptomForm" (ngSubmit)="onSubmit()"  fxLayout="column" fxLayoutGap="3rem">
+    <app-grade-question formControlName="orthopnea" [name]="'orthopnea'"></app-grade-question>
+      <hr/>
+    <app-grade-question formControlName="cough" [name]="'cough'"></app-grade-question>
+      <hr/>
+    <app-grade-question formControlName="edema" [name]="'edema'"></app-grade-question>
+      <hr/>
+    <app-grade-question formControlName="dizziness" [name]="'dizziness'"></app-grade-question>
+      <hr/>
+    <app-boolean-question formControlName="syncope" [name]="'syncope'"></app-boolean-question>
+    <app-error-message *ngIf="showError" (dismissError)="dismissError()"></app-error-message>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <button type="button" (click)="onReset()">{{ 'form.reset' | translate }}</button>
+      <button type="submit" [disabled]="!symptomForm.valid">{{ 'form.submit' | translate }}</button>
+    </div>
+</form>

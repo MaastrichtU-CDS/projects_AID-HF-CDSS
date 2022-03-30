@@ -1,0 +1,14 @@
+<div fxLayout="column" fxLayoutGap="2rem">
+    <app-information-section [questionName]="name">
+        <label for="range">{{ 'question.' + name | translate }}</label>
+    </app-information-section>
+    <div>
+        <input type="range" id="volume" name="volume" [formControl]="control" min="0" max="3">
+        <div class="ticks">
+            <span class="tick">{{'question.none' | translate }}</span>
+            <span class="tick">{{'question.slight' | translate }}</span>
+            <span class="tick">{{'question.moderate' | translate }}</span>
+            <span class="tick">{{'question.severe' | translate }}</span>
+        </div>
+    </div>
+</div>

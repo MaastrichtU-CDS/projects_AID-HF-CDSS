@@ -1,92 +1,118 @@
-# AID HF CDSS
+# AID-HF
 
+## Project Structure
 
+`/src/*` structure follows default Java structure.
 
-## Getting started
+`/src/main/webapp/*` structure follows default Angular structure.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+`/target` folder where artifacts can be found after compile / build.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Development
 
-## Add your files
+Before you can build this project, you must install and configure the following dependencies on your machine:
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+1. [Node.js] **(v16.14.0)**: We use Node to run a development web server and build the project (for the frontend).
+   Depending on your system, you can install Node either from source or as a pre-packaged bundle.
+2. [Java] **(minimal v8)**: We use Java on the backend.
+3. [Maven] **(v3.6)**: We use Maven to manage backend dependencies and builds.
+
+[Node.js]: https://nodejs.org/en/
+[Java]: https://www.java.com/en/
+[Maven]: https://maven.apache.org/
+
+### Frontend development
+
+After installing Node, move to the `/src/main/webapp/` folder. You should be able to run the following command to
+install the necessary development tools. You will only need to run this command when dependencies in
+`/src/main/webapp/package.json`change.
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/UM-CDS/projects/AID-HF-CDSS.git
-git branch -M main
-git push -uf origin main
+npm install
 ```
 
-## Integrate with your tools
+To run the frontend in a development mode, run this command from the `/src/main/webapp/` folder:
 
-- [ ] [Set up project integrations](https://gitlab.com/UM-CDS/projects/AID-HF-CDSS/-/settings/integrations)
+```
+npm start
+```
 
-## Collaborate with your team
+Now a development webserver will serve the application from `http://localhost:4200/`.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Edit the `application.yml` file inside `/src/main/resources` and set the property "allowed-api" to url: `http://localhost:4200/`.
+This allows the frontend application on port 4200 to communicate with the backend.
+### Backend development
 
-## Test and Deploy
+After installing Java and Maven, move to the project's root folder. You should be able to run the following command to
+install the dependencies. You will only need to run this command when dependencies change in `/pom.xml`.
 
-Use the built-in continuous integration in GitLab.
+```
+mvn install
+```
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+To run the backend in development mode, run this command from the `/` (root of project):
 
-***
+```
+mvn spring-boot:run
+```
 
-# Editing this README
+Now a webserver will serve the application from `http://localhost:8080/api/advice`
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+#### OpenMarkov
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+It is worth noting that the project contains several OpenMarkov repositories. You can find them in
+`src/main/java/org/openmarkov` folder. In file `src/main/java/org/openmarkov/plugin/PluginLoader.java` methods
+`loadAllPlugins()` and `PluginLoader()` have been modified to allow integration with the rest of the project. In case
+you want to update the OpenMarkov repositories, these changes need to be reflected. You can find the details about
+OpenMarkov on their [Bitbucket page].
 
-## Name
-Choose a self-explaining name for your project.
+[bitbucket page]: https://bitbucket.org/cisiad/org.openmarkov/wiki/Home
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## Building for production
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Both components (frontend and backend) are separate entities that communicate through a REST-API and can be deployed in
+various ways.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+We chose to include the javascript client in backend's webserver (this is an easy option to get started). This means
+that only one application needs to run for the application to function properly. Both frontend and backend will start
+simultaneously.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Other option is to separate the two components - build and run frontend and backend separately. Something to keep in
+mind - The development tools of Angular already include a webserver (which you also use for frontend development), but
+this webserver is not suited for production use! If you choose this option, you have to configure a webserver yourself (
+for example NGINX) to serve the frontend.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### Packaging as jar with frontend included
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Edit the `application.yml` file inside `/src/main/resources` and set the value of the property "allowed-api" to nothing.
+This still allows the frontend on port 8080 to communicate with the backend on the same port.
+But this raises CORS related issues for communication coming from other ports (which is better in terms of security).
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+To build the final jar for production, run this command from the root folder:
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```
+mvn -Pprod clean verify
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+The output file you can find in: `target/aid-hf-<version>-SNAPSHOT.jar` and can be started with:
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+```
+java -jar <fileName.jar>
+```
+Now the included Tomcat webserver will serve the Javascript (angular) application on route: `http://localhost:8080/` and the API route(s) on `http://localhost:8080/api/advice`.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+### Packaging as jar without frontend
 
-## License
-For open source projects, say how it is licensed.
+To build the final jar for production with only the REST-API routes included, run:
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```
+mvn clean verify
+```
+Now this package doesn't contain the frontend on route `http://localhost:8080` but only the API on: `http://localhost:8080/api/advice`.
+To build the frontend go to `src/main/webapp` and run:
+```
+npm run build
+```
+The output can be found in `target/classes/static`. Copy these files to the appropriate folder of the webserver (of your choice).
+Be aware of CORS related issues when dealing with a separate deployment. By default, when the origin deviates from the backend URL you can get an error on HTTP requests.
+Please check the file `src/main/resources/application.yml` with the property `allowed-api`. Within this file you can adjust the configuration to allow external origins.

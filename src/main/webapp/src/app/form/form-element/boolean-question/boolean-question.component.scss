@@ -1,0 +1,29 @@
+@import 'src/variables.scss';
+
+p {
+  font-size: $questionFont;
+}
+.radio-toolbar input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+.radio-toolbar label {
+    display: inline-block;
+    background-color: white;
+    padding: 1rem 4rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border: 2px solid #ebe6ef;
+    border-radius: 4px;
+    transition: border 500ms;
+}
+.radio-toolbar label:hover {
+  border: 2px dotted $secondary;
+  cursor: pointer;
+}
+.radio-toolbar input[type="radio"]:checked + label {
+  border: 2px solid $secondary;
+  background-color: $contrast;
+}
+
