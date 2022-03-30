@@ -1,0 +1,75 @@
+@import "src/variables.scss";
+
+$unit: 0.5rem;
+
+label {
+  font-size: $questionFont;
+}
+@mixin range-track {
+  -webkit-appearance: none;
+  width: 100%;
+  height: $unit * 4;
+  color: transparent;
+  background: $contrast;
+  border-radius: 999px;
+  border: none;
+}
+@mixin range-thumb {
+  -webkit-appearance: none;
+  height: $unit * 4;
+  width: $unit * 4;
+  border-radius: 30px;
+  background: $secondary;
+  border: none;
+  cursor: pointer;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  display: block;
+  margin: 0;
+  width: 100%;
+  background: transparent;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  @include range-track();
+}
+input[type=range]::-moz-range-track {
+  @include range-track();
+}
+input[type=range]::-ms-track {
+  @include range-track();
+}
+input[type=range]::-ms-fill-lower {
+  display: none;
+}
+input[type=range]::-ms-fill-upper {
+  display: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  @include range-thumb();
+}
+input[type=range]::-moz-range-thumb {
+  @include range-thumb();
+}
+input[type=range]::-ms-thumb {
+  @include range-thumb();
+}
+.ticks {
+  display: flex;
+  justify-content: space-between;
+  // We need left & right padding that's half the width of the range thumb, so all ticks align with the center of the thumb
+  padding: $unit $unit * 2;
+}
+.tick {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 1px;
+  background: $contrast;
+  font-size: $rangeTickFontSize;
+  font-weight: $rangeTickFontWeight;
+  //Cap the height of the tick & push text down, so the tick renders as a little line and the text doesn't overlap the line. Also add margin, so the container expands enough that the next element you'll add won't overlap the ticks.
+  height: $unit;
+  line-height: $unit * 5;
+  margin-bottom: $unit * 2;
+}
