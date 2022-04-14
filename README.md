@@ -39,8 +39,6 @@ npm start
 
 Now a development webserver will serve the application from `http://localhost:4200/`.
 
-Edit the `application.yml` file inside `/src/main/resources` and set the property "allowed-api" to url: `http://localhost:4200/`.
-This allows the frontend application on port 4200 to communicate with the backend.
 ### Backend development
 
 After installing Java and Maven, move to the project's root folder. You should be able to run the following command to
@@ -56,7 +54,11 @@ To run the backend in development mode, run this command from the `/` (root of p
 mvn spring-boot:run
 ```
 
-Now a webserver will serve the application from `http://localhost:8080/api/advice`
+Edit the `application.yml` file inside `/src/main/resources` and set the `spring-profiles-active` property to: `dev`.
+This allows the application to load correct configuration from the `application-dev.yml` file and communicate with the
+frontend on port 4200.
+
+Now a webserver will serve the application from `http://localhost:4200/api/advice`
 
 #### OpenMarkov
 
@@ -82,11 +84,11 @@ mind - The development tools of Angular already include a webserver (which you a
 this webserver is not suited for production use! If you choose this option, you have to configure a webserver yourself (
 for example NGINX) to serve the frontend.
 
-### Packaging as jar with frontend included
+Either way you decide to do it, edit the `application.yml` file inside `/src/main/resources` and set
+the `spring-profiles-active`
+property to: `prod`. This allows the application to load correct configuration from the `application-prod.yml` file.
 
-Edit the `application.yml` file inside `/src/main/resources` and set the value of the property "allowed-api" to nothing.
-This still allows the frontend on port 8080 to communicate with the backend on the same port.
-But this raises CORS related issues for communication coming from other ports (which is better in terms of security).
+### Packaging as jar with frontend included
 
 To build the final jar for production, run this command from the root folder:
 
@@ -99,7 +101,10 @@ The output file you can find in: `target/aid-hf-<version>-SNAPSHOT.jar` and can 
 ```
 java -jar <fileName.jar>
 ```
-Now the included Tomcat webserver will serve the Javascript (angular) application on route: `http://localhost:8080/` and the API route(s) on `http://localhost:8080/api/advice`.
+
+Now the included Tomcat webserver will serve the Javascript (angular) application on route: `http://localhost:8080/`
+and the API route(s) on `http://localhost:8080/api/advice`. Be aware that this raises CORS related issues for
+communication coming from other ports (which is better in terms of security).
 
 ### Packaging as jar without frontend
 
@@ -108,11 +113,16 @@ To build the final jar for production with only the REST-API routes included, ru
 ```
 mvn clean verify
 ```
-Now this package doesn't contain the frontend on route `http://localhost:8080` but only the API on: `http://localhost:8080/api/advice`.
-To build the frontend go to `src/main/webapp` and run:
+
+Now this package doesn't contain the frontend on route `http://localhost:8080` but only the API
+on: `http://localhost:8080/api/advice`. To build the frontend go to `src/main/webapp` and run:
+
 ```
 npm run build
 ```
-The output can be found in `target/classes/static`. Copy these files to the appropriate folder of the webserver (of your choice).
-Be aware of CORS related issues when dealing with a separate deployment. By default, when the origin deviates from the backend URL you can get an error on HTTP requests.
-Please check the file `src/main/resources/application.yml` with the property `allowed-api`. Within this file you can adjust the configuration to allow external origins.
+
+The output can be found in `target/classes/static`. Copy these files to the appropriate folder of the webserver (of your
+choice). Be aware of CORS related issues when dealing with a separate deployment. By default, when the origin deviates
+from the backend URL you can get an error on HTTP requests. Please check the
+file `src/main/resources/application-prod.yml` with the property `allowed-api`. Within this file you can adjust the
+configuration to allow external origins.
