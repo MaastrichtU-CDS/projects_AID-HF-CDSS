@@ -2,7 +2,9 @@ logging:
   file:
     name: aid-hf.log
 
+spring:
+  profiles:
+    active: prod
 
 aid-hf:
-  allowed-api:
   model-file: ./20220203 - AID-HF.pgmx
